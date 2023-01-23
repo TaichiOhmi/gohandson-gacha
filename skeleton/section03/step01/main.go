@@ -8,11 +8,7 @@ import (
 	"time"
 )
 
-func main() {
-	// 乱数の種を設定する
-	// 現在時刻をUNIX時間にしたものを種とする
-	rand.Seed(time.Now().Unix())
-
+func draw() {
 	// TODO: 以下の処理をdraw関数として定義する
 
 	// 0から99までの間で乱数を生成する
@@ -33,6 +29,13 @@ func main() {
 	}
 
 	//  -- ここまで
+}
+
+func main() {
+	// 乱数の種を設定する
+	// 現在時刻をUNIX時間にしたものを種とする
+	rand.Seed(time.Now().Unix())
 
 	// TODO: draw関数を呼ぶ
+	draw()
 }
