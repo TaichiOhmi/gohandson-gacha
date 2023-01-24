@@ -54,7 +54,7 @@ func run() error {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// TODO: データベースから結果を最大100件取得し、変数resultsに代入
-
+		results, err := getResults(db, 100)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -113,7 +113,7 @@ func createTable(db *sql.DB) error {
 func saveResult(db *sql.DB, card *gacha.Card) error {
 	const sqlStr = `INSERT INTO results(rarity, name) VALUES (?,?);`
 	// TODO: Execメソッドを用いてINSERT文を実行する
-
+	_, err := db.Exec(sqlStr, card.Rarity.String(), card.Name)
 	if err != nil {
 		return err
 	}
@@ -132,7 +132,7 @@ func getResults(db *sql.DB, limit int) ([]*gacha.Card, error) {
 	for rows.Next() {
 		var card gacha.Card
 		// TODO: rows.Scanメソッドを用いてレコードをcardのフィールドに読み込む
-
+		err := rows.Scan(&card.Rarity, &card.Name)
 		if err != nil {
 			return nil, fmt.Errorf("Scan:%w", err)
 		}
